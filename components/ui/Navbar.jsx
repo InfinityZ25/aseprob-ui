@@ -23,11 +23,11 @@ const Navbar = ({ handleLogout }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 backdrop-blur-md z-50 shadow-md dark:shadow-lg">
+    <header className="fixed top-0 left-0 right-0 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark backdrop-blur-md z-50 shadow-md dark:shadow-lg">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <div className="flex items-center space-x-2">
-          <MountainIcon className="h-6 w-6 text-primary" />
-          <span className="text-lg font-bold text-foreground">Acme Inc</span>
+          <MountainIcon className="h-6 w-6 text-primary dark:text-primary-dark" />
+          <span className="text-lg font-bold">{t("companyName")}</span>
         </div>
         <nav className="hidden md:flex space-x-8">
           <NavLink href="#">{t("dashboard")}</NavLink>

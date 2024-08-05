@@ -8,7 +8,7 @@ const MobileNav = ({ isOpen, handleLogout }) => {
 
   return (
     <div
-      className={`md:hidden bg-white dark:bg-gray-800 backdrop-blur-md shadow-md dark:shadow-lg transition-all duration-300 ease-in-out ${
+      className={`md:hidden bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark backdrop-blur-md shadow-md dark:shadow-lg transition-all duration-300 ease-in-out ${
         isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
       }`}
     >
