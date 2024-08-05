@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false); // Add this state for animation
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,16 +23,16 @@ const Dashboard = () => {
     }
     setIsLoading(false);
 
-    setIsLoaded(true); // Trigger the animation once the component is ready
+    setIsLoaded(true);
   }, [router]);
 
   const handleLogout = () => {
-    setIsLoading(true); // Start the loading animation
+    setIsLoading(true);
     setTimeout(() => {
       localStorage.removeItem("user");
       setIsLoggedIn(false);
       router.push("/");
-    }, 1000); // Adjust the delay as needed
+    }, 1000);
   };
 
   if (isLoading) {
@@ -42,16 +42,12 @@ const Dashboard = () => {
   if (!isLoggedIn) return null;
 
   return (
-    <div
-      className={`min-h-screen bg-background transition-opacity transform duration-1000 ${
-        isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-    >
-      <header className="fixed w-full bg-background bg-opacity-20 backdrop-blur-lg shadow-md z-20">
+    <div className="min-h-screen bg-background">
+      <header className="fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-md shadow-sm z-50">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <div className="flex items-center">
-            <MountainIcon className="h-8 w-8 mr-2" />
-            <span className="text-xl font-bold">Acme Inc</span>
+            <MountainIcon className="h-8 w-8 mr-2 text-primary" />
+            <span className="text-xl font-bold text-foreground">Acme Inc</span>
           </div>
           <nav className="hidden md:flex space-x-8">
             <NavLink href="#">Dashboard</NavLink>
@@ -62,14 +58,14 @@ const Dashboard = () => {
           <div className="flex items-center space-x-4">
             <Button
               variant="outline"
-              className="hidden md:block"
+              className="hidden md:inline-flex"
               onClick={handleLogout}
             >
               Logout
             </Button>
             <ThemeToggle />
             <button
-              className="md:hidden p-2 rounded-md focus:outline-none"
+              className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               onClick={() => setIsNavOpen(!isNavOpen)}
             >
               <MenuIcon isOpen={isNavOpen} />
@@ -79,7 +75,9 @@ const Dashboard = () => {
 
         <MobileNav isOpen={isNavOpen} handleLogout={handleLogout} />
       </header>
-      <DashboardContent />
+      <main className="pt-20">
+        <DashboardContent />
+      </main>
     </div>
   );
 };
@@ -87,7 +85,7 @@ const Dashboard = () => {
 const NavLink = ({ href, children }) => (
   <a
     href={href}
-    className="text-lg font-medium hover:text-primary transition-colors"
+    className="text-lg font-medium text-foreground hover:text-primary transition-colors"
   >
     {children}
   </a>
@@ -95,7 +93,7 @@ const NavLink = ({ href, children }) => (
 
 const MobileNav = ({ isOpen, handleLogout }) => (
   <div
-    className={`md:hidden bg-background bg-opacity-20 backdrop-blur-lg shadow-lg transition-all duration-300 ease-in-out ${
+    className={`md:hidden bg-background/90 backdrop-blur-md shadow-sm transition-all duration-300 ease-in-out ${
       isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
     }`}
   >
