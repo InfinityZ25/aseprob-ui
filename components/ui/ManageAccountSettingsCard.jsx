@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { cn } from "../../lib/utils";
+import { cn, formatPhoneNumber } from "../../lib/utils";
 import { Button } from "./button";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { Input } from "./input";
@@ -90,7 +90,11 @@ const ManageAccountSettingsCard = ({
                   <Input
                     id={field}
                     name={field}
-                    value={formData[field]}
+                    value={
+                      field === "phone"
+                        ? formatPhoneNumber(formData[field])
+                        : formData[field]
+                    }
                     onChange={handleInputChange}
                     placeholder={t(
                       `example${field.charAt(0).toUpperCase() + field.slice(1)}`
@@ -107,7 +111,9 @@ const ManageAccountSettingsCard = ({
                   />
                 ) : (
                   <p className="text-foreground">
-                    {user[field] || t("notProvided")}
+                    {field === "phone"
+                      ? formatPhoneNumber(user[field])
+                      : user[field] || t("notProvided")}
                   </p>
                 )}
               </div>

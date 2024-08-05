@@ -10,11 +10,15 @@ const BioCard = ({ user, formData, isEditing, handleInputChange }) => {
   return (
     <Card className="lg:col-span-1 shadow-lg bg-background/100">
       <CardHeader className="text-center flex flex-col items-center p-6">
-        <Avatar className="w-32 h-32 mb-4">
+        <Avatar className="w-12 h-12 mb-4 border border-muted-foreground">
           {user.avatarUrl ? (
-            <AvatarImage src={user.avatarUrl} alt={user.name} />
+            <AvatarImage
+              src={user.avatarUrl}
+              alt={user.name}
+              className="object-cover"
+            />
           ) : (
-            <AvatarFallback>
+            <AvatarFallback className="text-sm font-semibold bg-muted">
               {(user.name || t("notProvided")).charAt(0)}
             </AvatarFallback>
           )}
