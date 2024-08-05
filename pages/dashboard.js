@@ -1,48 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { ThemeToggle } from '../components/ui/ThemeToggle';
-import { Button } from '../components/ui/button';
-import DashboardContent from '../components/ui/DashboardContent';
-import MountainIcon from '../components/ui/mountain-icon';
-import MenuIcon from '../components/ui/menu-icon';
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { Button } from "../components/ui/button";
+import DashboardContent from "../components/ui/DashboardContent";
+import MenuIcon from "../components/ui/menu-icon";
+import MountainIcon from "../components/ui/mountain-icon";
+import Spinner from "../components/ui/Spinner";
+import { ThemeToggle } from "../components/ui/ThemeToggle";
 
 const Dashboard = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false); // Add this state for animation
   const router = useRouter();
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
     if (user) {
       setIsLoggedIn(true);
     } else {
-      router.push('/login');
+      router.push("/login");
     }
     setIsLoading(false);
+
+    setIsLoaded(true); // Trigger the animation once the component is ready
   }, [router]);
 
   const handleLogout = () => {
-    setIsLoading(true);
+    setIsLoading(true); // Start the loading animation
     setTimeout(() => {
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
       setIsLoggedIn(false);
-      router.push('/');
-    }, 1000);
+      router.push("/");
+    }, 1000); // Adjust the delay as needed
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin h-16 w-16 border-4 border-t-transparent border-gray-900 rounded-full"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (!isLoggedIn) return null;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className={`min-h-screen bg-background transition-opacity transform duration-1000 ${
+        isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
       <header className="fixed w-full bg-background bg-opacity-20 backdrop-blur-lg shadow-md z-20">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <div className="flex items-center">
@@ -92,7 +96,7 @@ const NavLink = ({ href, children }) => (
 const MobileNav = ({ isOpen, handleLogout }) => (
   <div
     className={`md:hidden bg-background bg-opacity-20 backdrop-blur-lg shadow-lg transition-all duration-300 ease-in-out ${
-      isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+      isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
     }`}
   >
     <nav className="flex flex-col space-y-4 p-4">

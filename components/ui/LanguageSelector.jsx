@@ -1,20 +1,37 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from './button';
+import { Globe } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 export function LanguageSelector() {
   const { i18n } = useTranslation();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const handleLanguageChange = (e) => {
-    i18n.changeLanguage(e.target.value);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'es' : 'en';
+    i18n.changeLanguage(newLang);
   };
 
+  const isEnglish = i18n.language === 'en';
+
   return (
-    <select
-      onChange={handleLanguageChange}
-      defaultValue={i18n.language}
-      className="p-2 rounded-md border bg-background text-foreground"
+    <Button
+      onClick={toggleLanguage}
+      className="transition-colors duration-300 ease-in-out text-sm p-2 rounded-full flex items-center gap-1 bg-primary text-primary-foreground hover:bg-primary/90"
+      style={{ transform: `scale(${isEnglish ? 1.0 : 1.1})` }}
     >
-      <option value="en">English</option>
-      <option value="es">Español</option>
-    </select>
+      <Globe size={16} />
+      {isEnglish ? 'EN' : 'ES'}
+    </Button>
   );
 }
