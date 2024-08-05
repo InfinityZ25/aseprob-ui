@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
@@ -24,9 +24,13 @@ const ManageAccountSettingsCard = ({
   handleSubmit,
 }) => {
   const { t } = useTranslation();
+  const [openDropdowns, setOpenDropdowns] = useState({
+    language: false,
+    timezone: false,
+  });
 
   return (
-    <Card className="lg:col-span-2 shadow-lg bg-background/100">
+    <Card className="lg:col-span-2 shadow-lg bg-background">
       <CardHeader className="p-6">
         <CardTitle className="text-3xl font-semibold mb-2 text-primary">
           {t("manageAccountSettings")}
@@ -91,8 +95,12 @@ const ManageAccountSettingsCard = ({
                         target: { name: field, value },
                       })
                     }
+                    open={openDropdowns[field]}
+                    onOpenChange={(open) =>
+                      setOpenDropdowns((prev) => ({ ...prev, [field]: open }))
+                    }
                   >
-                    <SelectTrigger className="w-full bg-background/100 text-foreground border border-input shadow-sm focus:ring-2 focus:ring-primary">
+                    <SelectTrigger className="w-full bg-background text-foreground border border-input shadow-sm focus:ring-2 focus:ring-primary">
                       <SelectValue
                         placeholder={t(
                           `select${
@@ -101,22 +109,45 @@ const ManageAccountSettingsCard = ({
                         )}
                       />
                     </SelectTrigger>
-                    <SelectContent className="bg-background/100 border border-input shadow-lg max-h-[200px] overflow-y-auto">
+                    <SelectContent className="bg-white dark:bg-gray-800 text-foreground border border-gray-200 dark:border-gray-600 shadow-lg max-h-[200px] overflow-y-auto">
                       {field === "language" ? (
                         <>
                           <SelectItem
                             value="en"
-                            className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
                           >
                             English
                           </SelectItem>
-                          {/* Add other language options */}
+                          <SelectItem
+                            value="es"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Español
+                          </SelectItem>
+                          <SelectItem
+                            value="fr"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Français
+                          </SelectItem>
+                          <SelectItem
+                            value="de"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Deutsch
+                          </SelectItem>
+                          <SelectItem
+                            value="it"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Italiano
+                          </SelectItem>
                         </>
                       ) : (
                         <>
                           <SelectItem
                             value="UTC"
-                            className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
                           >
                             UTC
                           </SelectItem>
