@@ -8,32 +8,30 @@ const BioCard = ({ user, formData, isEditing, handleInputChange }) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="lg:col-span-1 shadow-lg bg-background/100">
-      <CardHeader className="text-center flex flex-col items-center p-6">
-        <Avatar className="w-12 h-12 mb-4 border border-muted-foreground">
+    <Card className="lg:col-span-1 shadow-lg bg-background/100 rounded-lg">
+      <CardHeader className="flex flex-col items-center p-8">
+        <Avatar className="w-20 h-20 mb-6 rounded-full border-2 border-primary shadow-md">
           {user.avatarUrl ? (
             <AvatarImage
               src={user.avatarUrl}
               alt={user.name}
-              className="object-cover"
+              className="object-cover rounded-full"
             />
           ) : (
-            <AvatarFallback className="text-sm font-semibold bg-muted">
+            <AvatarFallback className="text-lg font-semibold bg-muted text-muted-foreground">
               {(user.name || t("notProvided")).charAt(0)}
             </AvatarFallback>
           )}
         </Avatar>
-        <CardTitle className="text-2xl mb-2 text-foreground">
+        <CardTitle className="text-2xl font-bold text-foreground mb-1">
           {user.name || t("notProvided")}
         </CardTitle>
-        <p className="text-muted-foreground mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           {user.email || t("notProvided")}
         </p>
         <div className="w-full text-left">
-          <h3 className="text-xl font-semibold mb-3 text-primary">
-            {t("bio")}
-          </h3>
-          <div className="bg-background/100 p-4 rounded-md mb-4 h-full min-h-[200px]">
+          <h3 className="text-lg font-medium text-primary mb-2">{t("bio")}</h3>
+          <div className="bg-background/100 p-4 rounded-md border border-muted-foreground shadow-inner h-full min-h-[150px]">
             {isEditing ? (
               <Textarea
                 id="bio"
@@ -41,10 +39,10 @@ const BioCard = ({ user, formData, isEditing, handleInputChange }) => {
                 value={formData.bio}
                 onChange={handleInputChange}
                 placeholder={t("enterYourBio")}
-                className="w-full h-full min-h-[180px] resize-none text-foreground"
+                className="w-full h-full min-h-[140px] resize-none text-foreground border-none rounded-md"
               />
             ) : (
-              <p className="whitespace-pre-wrap break-words h-full min-h-[180px] overflow-y-auto text-foreground">
+              <p className="whitespace-pre-wrap break-words h-full min-h-[140px] overflow-y-auto text-foreground">
                 {user.bio || t("noBioAvailable")}
               </p>
             )}
