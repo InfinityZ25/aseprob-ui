@@ -30,13 +30,16 @@ const Navbar = ({ handleLogout }) => {
           <span className="text-lg font-bold">{t("companyName")}</span>
         </div>
         <nav className="hidden md:flex space-x-8">
-          <NavLink href="#">{t("dashboard")}</NavLink>
-          <NavLink href="#">{t("orders")}</NavLink>
-          <NavLink href="#">{t("products")}</NavLink>
-          <NavLink href="#">{t("customers")}</NavLink>
+          <NavLink href="/dashboard">{t("dashboard")}</NavLink>
+          <NavLink href="/orders">{t("orders")}</NavLink>
+          <NavLink href="/products">{t("products")}</NavLink>
+          <NavLink href="/customers">{t("customers")}</NavLink>
         </nav>
         <div className="flex items-center space-x-4">
-          <button className="hidden md:block p-2 rounded-full bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+          <button
+            className="hidden md:block p-2 rounded-full bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+            onClick={() => router.push("/account")}
+          >
             <FaUser />
           </button>
           <Button
