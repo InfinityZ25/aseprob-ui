@@ -27,7 +27,12 @@ const Navbar = ({ handleLogout }) => {
     setTimeout(() => setIsClicked(false), 300);
   };
 
+  const closeNav = () => {
+    setIsNavOpen(false);
+  };
+
   const handleLogoClick = () => {
+    closeNav();
     router.push("/dashboard");
   };
 
@@ -35,10 +40,6 @@ const Navbar = ({ handleLogout }) => {
     if (router.pathname === path) return true;
     else if (router.pathname.startsWith(path)) return true;
     return false;
-  };
-
-  const closeNav = () => {
-    setIsNavOpen(false);
   };
 
   return (
