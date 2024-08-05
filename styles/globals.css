@@ -71,3 +71,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-login-button {
+  background-color: #4CAF50; /* Initial color */
+  color: white; /* Initial text color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-login-button:hover {
+  background-color: #FF5733; /* New hover color */
+  color: black; /* Text color when hovered */
+}
+
+.dark .custom-login-button:hover {
+  color: white; /* Ensure text remains white in dark mode */
+}
