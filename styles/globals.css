@@ -52,7 +52,9 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px;
   }
 
@@ -80,16 +82,24 @@
 }
 
 .custom-login-button {
-  background-color: #4CAF50; /* Initial color */
+  background-color: #4caf50; /* Initial color */
   color: white; /* Initial text color */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .custom-login-button:hover {
-  background-color: #FF5733; /* New hover color */
+  background-color: #ff5733; /* New hover color */
   color: black; /* Text color when hovered */
 }
 
 .dark .custom-login-button:hover {
   color: white; /* Ensure text remains white in dark mode */
+}
+
+.profile-button-shadow {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.profile-button-large {
+  transform: scale(1.15);
 }

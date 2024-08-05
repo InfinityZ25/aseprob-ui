@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
-import { FaUser } from "react-icons/fa";
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import NavLink from "./NavLink";
 import { Button } from "./button";
 
@@ -11,7 +11,7 @@ const MobileNav = ({ isOpen, handleLogout }) => {
   return (
     <div
       className={`md:hidden bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark backdrop-blur-md shadow-md dark:shadow-lg transition-all duration-300 ease-in-out ${
-        isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+        isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
       }`}
     >
       <nav className="flex flex-col space-y-4 p-4">
@@ -55,20 +55,22 @@ const MobileNav = ({ isOpen, handleLogout }) => {
         >
           {t("customers")}
         </NavLink>
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-end items-center space-x-2 mt-4">
           <Button
             variant="outline"
             onClick={handleLogout}
-            className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="p-2 border border-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+            aria-label={t("logout")}
           >
-            {t("logout")}
+            <FaSignOutAlt />
           </Button>
-          <button
-            className="ml-4 p-2 rounded-full bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
+          <Button
+            className="p-2 rounded-full bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
             onClick={() => router.push("/account")}
+            aria-label={t("profile")}
           >
             <FaUser />
-          </button>
+          </Button>
         </div>
       </nav>
     </div>
