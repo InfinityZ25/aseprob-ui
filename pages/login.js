@@ -139,10 +139,10 @@ export default function LoginPage() {
           "allRightsReserved"
         )}`}</span>
         <div className="mt-2 space-x-4">
-          <a href="#" className="hover:underline">
+          <a href="/privacy-policy" className="hover:underline">
             {t("privacyPolicy")}
           </a>
-          <a href="#" className="hover:underline">
+          <a href="/tos" className="hover:underline">
             {t("termsOfService")}
           </a>
         </div>
