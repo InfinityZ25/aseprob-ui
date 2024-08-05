@@ -17,17 +17,17 @@ const MobileNav = ({ isOpen, handleLogout }) => {
         <NavLink href="#">{t("orders")}</NavLink>
         <NavLink href="#">{t("products")}</NavLink>
         <NavLink href="#">{t("customers")}</NavLink>
-        <div className="flex justify-center items-center space-x-4 mt-4">
-          <button className="p-2 rounded-full bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white">
-            <FaUser />
-          </button>
+        <div className="flex justify-between items-center mt-4">
           <Button
             variant="outline"
             onClick={handleLogout}
-            className="hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
           >
             {t("logout")}
           </Button>
+          <button className="ml-4 p-2 rounded-full bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white">
+            <FaUser />
+          </button>
         </div>
       </nav>
     </div>
