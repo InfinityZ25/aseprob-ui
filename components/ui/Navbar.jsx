@@ -37,6 +37,10 @@ const Navbar = ({ handleLogout }) => {
     return false;
   };
 
+  const closeNav = () => {
+    setIsNavOpen(false);
+  };
+
   return (
     <>
       <style jsx global>{`
@@ -139,7 +143,11 @@ const Navbar = ({ handleLogout }) => {
             </button>
           </div>
         </div>
-        <MobileNav isOpen={isNavOpen} handleLogout={handleLogout} />
+        <MobileNav
+          isOpen={isNavOpen}
+          handleLogout={handleLogout}
+          closeNav={closeNav}
+        />
       </header>
     </>
   );

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Button } from "./button";
 
-const MobileNav = ({ isOpen, handleLogout }) => {
+const MobileNav = ({ isOpen, handleLogout, closeNav }) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -17,6 +17,9 @@ const MobileNav = ({ isOpen, handleLogout }) => {
       <nav className="flex flex-col space-y-4 p-4">
         <Link
           href="/dashboard"
+          onClick={() => {
+            closeNav(); // Close nav after navigating
+          }}
           className={`${
             router.pathname === "/dashboard"
               ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
@@ -27,6 +30,9 @@ const MobileNav = ({ isOpen, handleLogout }) => {
         </Link>
         <Link
           href="/orders"
+          onClick={() => {
+            closeNav(); // Close nav after navigating
+          }}
           className={`${
             router.pathname === "/orders"
               ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
@@ -37,6 +43,9 @@ const MobileNav = ({ isOpen, handleLogout }) => {
         </Link>
         <Link
           href="/products"
+          onClick={() => {
+            closeNav(); // Close nav after navigating
+          }}
           className={`${
             router.pathname === "/products"
               ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
@@ -47,6 +56,9 @@ const MobileNav = ({ isOpen, handleLogout }) => {
         </Link>
         <Link
           href="/customers"
+          onClick={() => {
+            closeNav(); // Close nav after navigating
+          }}
           className={`${
             router.pathname === "/customers"
               ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
@@ -66,7 +78,10 @@ const MobileNav = ({ isOpen, handleLogout }) => {
           </Button>
           <Button
             className="p-2 rounded-full bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
-            onClick={() => router.push("/account")}
+            onClick={() => {
+              router.push("/account");
+              closeNav(); // Close nav after navigating to account
+            }}
             aria-label={t("profile")}
           >
             <FaUser />
