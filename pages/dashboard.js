@@ -22,7 +22,6 @@ const Dashboard = () => {
       router.push("/login");
     }
     setIsLoading(false);
-
     setIsLoaded(true);
   }, [router]);
 
@@ -43,13 +42,13 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-md shadow-sm z-50">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
+      <header className="fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-md z-50 shadow-[0_2px_4px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_4px_rgba(255,255,255,0.1)]">
+        <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center">
-            <MountainIcon className="h-8 w-8 mr-2 text-primary" />
-            <span className="text-xl font-bold text-foreground">Acme Inc</span>
+            <MountainIcon className="h-6 w-6 mr-2 text-primary" />
+            <span className="text-lg font-bold text-foreground">Acme Inc</span>
           </div>
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-6">
             <NavLink href="#">Dashboard</NavLink>
             <NavLink href="#">Orders</NavLink>
             <NavLink href="#">Products</NavLink>
@@ -72,10 +71,9 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-
         <MobileNav isOpen={isNavOpen} handleLogout={handleLogout} />
       </header>
-      <main className="pt-20">
+      <main className="pt-14">
         <DashboardContent />
       </main>
     </div>
@@ -85,7 +83,7 @@ const Dashboard = () => {
 const NavLink = ({ href, children }) => (
   <a
     href={href}
-    className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+    className="text-base font-medium text-foreground hover:text-primary transition-colors"
   >
     {children}
   </a>
@@ -93,7 +91,7 @@ const NavLink = ({ href, children }) => (
 
 const MobileNav = ({ isOpen, handleLogout }) => (
   <div
-    className={`md:hidden bg-background/90 backdrop-blur-md shadow-sm transition-all duration-300 ease-in-out ${
+    className={`md:hidden bg-background/90 backdrop-blur-md shadow-[0_2px_4px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_4px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out ${
       isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
     }`}
   >
