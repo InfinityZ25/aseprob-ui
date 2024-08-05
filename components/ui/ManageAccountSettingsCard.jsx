@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
@@ -23,14 +23,50 @@ const ManageAccountSettingsCard = ({
   handleCancel,
   handleSubmit,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [openDropdowns, setOpenDropdowns] = useState({
     language: false,
     timezone: false,
   });
+  const [originalLanguage, setOriginalLanguage] = useState(i18n.language);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setOriginalLanguage(i18n.language);
+    }
+  }, [isEditing, i18n.language]);
+
+  const handleLanguageChange = (value) => {
+    handleInputChange({
+      target: { name: "language", value },
+    });
+  };
+
+  const handleCancelWithLanguageReset = () => {
+    handleCancel();
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (formData.language !== originalLanguage) {
+      i18n.changeLanguage(formData.language);
+    }
+    handleSubmit(e);
+  };
+
+  const getLanguageName = (code) => {
+    switch (code) {
+      case "en":
+        return "English";
+      case "es":
+        return "Español";
+      default:
+        return code;
+    }
+  };
 
   return (
-    <Card className="lg:col-span-2 shadow-lg bg-background">
+    <Card className="lg:col-span-2 shadow-lg bg-background relative pb-16">
       <CardHeader className="p-6">
         <CardTitle className="text-3xl font-semibold mb-2 text-primary">
           {t("manageAccountSettings")}
@@ -40,7 +76,7 @@ const ManageAccountSettingsCard = ({
         </p>
       </CardHeader>
       <CardContent className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleFormSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {["name", "email", "phone"].map((field) => (
               <div key={field} className="space-y-2">
@@ -90,11 +126,15 @@ const ManageAccountSettingsCard = ({
                     id={field}
                     name={field}
                     value={formData[field]}
-                    onValueChange={(value) =>
-                      handleInputChange({
-                        target: { name: field, value },
-                      })
-                    }
+                    onValueChange={(value) => {
+                      if (field === "language") {
+                        handleLanguageChange(value);
+                      } else {
+                        handleInputChange({
+                          target: { name: field, value },
+                        });
+                      }
+                    }}
                     open={openDropdowns[field]}
                     onOpenChange={(open) =>
                       setOpenDropdowns((prev) => ({ ...prev, [field]: open }))
@@ -124,24 +164,6 @@ const ManageAccountSettingsCard = ({
                           >
                             Español
                           </SelectItem>
-                          <SelectItem
-                            value="fr"
-                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
-                          >
-                            Français
-                          </SelectItem>
-                          <SelectItem
-                            value="de"
-                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
-                          >
-                            Deutsch
-                          </SelectItem>
-                          <SelectItem
-                            value="it"
-                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
-                          >
-                            Italiano
-                          </SelectItem>
                         </>
                       ) : (
                         <>
@@ -151,14 +173,57 @@ const ManageAccountSettingsCard = ({
                           >
                             UTC
                           </SelectItem>
-                          {/* Add other timezone options */}
+                          <SelectItem
+                            value="America/New_York"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Eastern Time (ET)
+                          </SelectItem>
+                          <SelectItem
+                            value="America/Chicago"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Central Time (CT)
+                          </SelectItem>
+                          <SelectItem
+                            value="America/Denver"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Mountain Time (MT)
+                          </SelectItem>
+                          <SelectItem
+                            value="America/Los_Angeles"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Pacific Time (PT)
+                          </SelectItem>
+                          <SelectItem
+                            value="Europe/London"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            British Time (BST)
+                          </SelectItem>
+                          <SelectItem
+                            value="Europe/Paris"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Central European Time (CET)
+                          </SelectItem>
+                          <SelectItem
+                            value="Asia/Tokyo"
+                            className="text-foreground hover:bg-accent dark:hover:bg-accent-dark"
+                          >
+                            Japan Standard Time (JST)
+                          </SelectItem>
                         </>
                       )}
                     </SelectContent>
                   </Select>
                 ) : (
                   <p className="text-foreground">
-                    {user[field] || t("notSelected")}
+                    {field === "language"
+                      ? getLanguageName(user[field])
+                      : user[field] || t("notSelected")}
                   </p>
                 )}
               </div>
@@ -202,30 +267,33 @@ const ManageAccountSettingsCard = ({
               </div>
             ))}
           </div>
-
-          <div className="flex justify-end space-x-4 mt-6">
-            {isEditing ? (
-              <>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="shadow-md"
-                  onClick={handleCancel}
-                >
-                  {t("cancel")}
-                </Button>
-                <Button type="submit" className="shadow-md">
-                  {t("save")}
-                </Button>
-              </>
-            ) : (
-              <Button type="button" className="shadow-md" onClick={handleEdit}>
-                {t("edit")}
-              </Button>
-            )}
-          </div>
         </form>
       </CardContent>
+      <div className="absolute bottom-0 right-0 p-4 bg-background w-full flex justify-end space-x-4">
+        {isEditing ? (
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              className="shadow-md"
+              onClick={handleCancelWithLanguageReset}
+            >
+              {t("cancel")}
+            </Button>
+            <Button
+              type="submit"
+              className="shadow-md"
+              onClick={handleFormSubmit}
+            >
+              {t("save")}
+            </Button>
+          </>
+        ) : (
+          <Button type="button" className="shadow-md" onClick={handleEdit}>
+            {t("edit")}
+          </Button>
+        )}
+      </div>
     </Card>
   );
 };
