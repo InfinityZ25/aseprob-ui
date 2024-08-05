@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ProductsContent from "../components/ui/ProductsContent";
-import Navbar from "../components/ui/Navbar";
 import Spinner from "../components/ui/Spinner";
+import Link from "next/link";
 
 const Products = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,7 +38,6 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar handleLogout={handleLogout} />
       <main className="pt-14">
         <ProductsContent />
       </main>

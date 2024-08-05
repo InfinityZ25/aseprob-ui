@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,7 +8,6 @@ import { LanguageSelector } from "./LanguageSelector";
 import MenuIcon from "./menu-icon";
 import MobileNav from "./MobileNav";
 import MountainIcon from "./mountain-icon";
-import NavLink from "./NavLink";
 import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = ({ handleLogout }) => {
@@ -29,6 +29,12 @@ const Navbar = ({ handleLogout }) => {
 
   const handleLogoClick = () => {
     router.push("/dashboard");
+  };
+
+  const isActive = (path) => {
+    if (router.pathname === path) return true;
+    else if (router.pathname.startsWith(path)) return true;
+    return false;
   };
 
   return (
@@ -63,6 +69,10 @@ const Navbar = ({ handleLogout }) => {
         .profile-button-large:hover {
           transform: scale(1.25) rotate(5deg);
         }
+        .active-link {
+          font-weight: bold;
+          border-bottom: 2px solid var(--color-primary);
+        }
       `}</style>
       <header className="fixed top-0 left-0 right-0 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark backdrop-blur-md z-50 shadow-md dark:shadow-lg">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
@@ -74,10 +84,30 @@ const Navbar = ({ handleLogout }) => {
             <span className="text-lg font-bold">{t("companyName")}</span>
           </div>
           <nav className="hidden md:flex space-x-8">
-            <NavLink href="/dashboard">{t("dashboard")}</NavLink>
-            <NavLink href="/orders">{t("orders")}</NavLink>
-            <NavLink href="/products">{t("products")}</NavLink>
-            <NavLink href="/customers">{t("customers")}</NavLink>
+            <Link
+              href="/dashboard"
+              className={isActive("/dashboard") ? "active-link" : ""}
+            >
+              {t("dashboard")}
+            </Link>
+            <Link
+              href="/orders"
+              className={isActive("/orders") ? "active-link" : ""}
+            >
+              {t("orders")}
+            </Link>
+            <Link
+              href="/products"
+              className={isActive("/products") ? "active-link" : ""}
+            >
+              {t("products")}
+            </Link>
+            <Link
+              href="/customers"
+              className={isActive("/customers") ? "active-link" : ""}
+            >
+              {t("customers")}
+            </Link>
           </nav>
           <div className="flex items-center space-x-4">
             <button

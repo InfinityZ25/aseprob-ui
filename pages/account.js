@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import AccountContent from "../components/ui/AccountContent";
-import Navbar from "../components/ui/Navbar";
 import Spinner from "../components/ui/Spinner";
+import Link from "next/link";
 
 const Account = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,7 +36,6 @@ const Account = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar handleLogout={handleLogout} />
       <main className="pt-14">
         <AccountContent />
       </main>

@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
-import NavLink from "./NavLink";
 import { Button } from "./button";
 
 const MobileNav = ({ isOpen, handleLogout }) => {
@@ -15,46 +15,46 @@ const MobileNav = ({ isOpen, handleLogout }) => {
       }`}
     >
       <nav className="flex flex-col space-y-4 p-4">
-        <NavLink
+        <Link
           href="/dashboard"
           className={`${
             router.pathname === "/dashboard"
-              ? "text-primary bg-highlight dark:bg-highlight-dark"
+              ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
               : ""
           }`}
         >
           {t("dashboard")}
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           href="/orders"
           className={`${
             router.pathname === "/orders"
-              ? "text-primary bg-highlight dark:bg-highlight-dark"
+              ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
               : ""
           }`}
         >
           {t("orders")}
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           href="/products"
           className={`${
             router.pathname === "/products"
-              ? "text-primary bg-highlight dark:bg-highlight-dark"
+              ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
               : ""
           }`}
         >
           {t("products")}
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           href="/customers"
           className={`${
             router.pathname === "/customers"
-              ? "text-primary bg-highlight dark:bg-highlight-dark"
+              ? "text-primary bg-highlight dark:bg-highlight-dark font-bold border-l-4 border-primary pl-2"
               : ""
           }`}
         >
           {t("customers")}
-        </NavLink>
+        </Link>
         <div className="flex justify-end items-center space-x-2 mt-4">
           <Button
             variant="outline"

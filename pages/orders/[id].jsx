@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import OrderPage from "../../components/ui/ OrderPage";
-import Navbar from "../../components/ui/Navbar";
 import Spinner from "../../components/ui/Spinner";
 
 // Function to fetch order data by ID
@@ -55,7 +54,6 @@ const OrderDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar handleLogout={handleLogout} />
       <main className="pt-16 px-4 sm:px-6 lg:px-8">
         <button
           type="button"
