@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { cn } from "../../lib/utils";
+import { cn, formatPhoneNumber } from "../../lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Button } from "./button";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
@@ -51,10 +51,18 @@ const AccountContent = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    if (name === "phone") {
+      const formattedPhone = formatPhoneNumber(value);
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: formattedPhone,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
   };
 
   const handleEdit = () => {
@@ -84,7 +92,7 @@ const AccountContent = () => {
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Card className="lg:col-span-1 shadow-lg">
+        <Card className="lg:col-span-1 shadow-lg bg-background/100">
           <CardHeader className="text-center flex flex-col items-center p-6">
             <Avatar className="w-32 h-32 mb-4">
               {user.avatarUrl ? (
@@ -95,7 +103,7 @@ const AccountContent = () => {
                 </AvatarFallback>
               )}
             </Avatar>
-            <CardTitle className="text-2xl mb-2">
+            <CardTitle className="text-2xl mb-2 text-foreground">
               {user.name || t("notProvided")}
             </CardTitle>
             <p className="text-muted-foreground mb-6">
@@ -105,7 +113,7 @@ const AccountContent = () => {
               <h3 className="text-xl font-semibold mb-3 text-primary">
                 {t("bio")}
               </h3>
-              <div className="bg-muted p-4 rounded-md mb-4 h-full min-h-[200px]">
+              <div className="bg-background/100 p-4 rounded-md mb-4 h-full min-h-[200px]">
                 {isEditing ? (
                   <Textarea
                     id="bio"
@@ -113,10 +121,10 @@ const AccountContent = () => {
                     value={formData.bio}
                     onChange={handleInputChange}
                     placeholder={t("enterYourBio")}
-                    className="w-full h-full min-h-[180px] resize-none"
+                    className="w-full h-full min-h-[180px] resize-none text-foreground"
                   />
                 ) : (
-                  <p className="whitespace-pre-wrap break-words h-full min-h-[180px] overflow-y-auto">
+                  <p className="whitespace-pre-wrap break-words h-full min-h-[180px] overflow-y-auto text-foreground">
                     {user.bio || t("noBioAvailable")}
                   </p>
                 )}
@@ -125,7 +133,7 @@ const AccountContent = () => {
           </CardHeader>
         </Card>
 
-        <Card className="lg:col-span-2 shadow-lg">
+        <Card className="lg:col-span-2 shadow-lg bg-background/100">
           <CardHeader className="p-6">
             <CardTitle className="text-3xl font-semibold mb-2 text-primary">
               {t("manageAccountSettings")}
@@ -152,7 +160,7 @@ const AccountContent = () => {
                         value={formData[field]}
                         onChange={handleInputChange}
                         placeholder={t(
-                          `enterYour${
+                          `example${
                             field.charAt(0).toUpperCase() + field.slice(1)
                           }`
                         )}
@@ -163,10 +171,11 @@ const AccountContent = () => {
                             ? "tel"
                             : "text"
                         }
-                        className="w-full shadow-sm"
+                        className="w-full shadow-sm text-foreground"
+                        maxLength={field === "phone" ? 14 : undefined}
                       />
                     ) : (
-                      <p className="text-gray-700">
+                      <p className="text-foreground">
                         {user[field] || t("notProvided")}
                       </p>
                     )}
@@ -192,7 +201,7 @@ const AccountContent = () => {
                           })
                         }
                       >
-                        <SelectTrigger className="w-full bg-background border border-input shadow-sm">
+                        <SelectTrigger className="w-full bg-background/100 text-foreground border border-input shadow-sm focus:ring-2 focus:ring-primary">
                           <SelectValue
                             placeholder={t(
                               `select${
@@ -201,25 +210,138 @@ const AccountContent = () => {
                             )}
                           />
                         </SelectTrigger>
-                        <SelectContent className="bg-white shadow-lg border border-gray-300">
+                        <SelectContent className="bg-background/100 border border-input shadow-lg max-h-[200px] overflow-y-auto">
                           {field === "language" ? (
                             <>
-                              <SelectItem value="en">English</SelectItem>
-                              <SelectItem value="es">Español</SelectItem>
-                              <SelectItem value="fr">Français</SelectItem>
+                              <SelectItem
+                                value="en"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                English
+                              </SelectItem>
+                              <SelectItem
+                                value="es"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Español
+                              </SelectItem>
+                              <SelectItem
+                                value="fr"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Français
+                              </SelectItem>
+                              <SelectItem
+                                value="de"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Deutsch
+                              </SelectItem>
+                              <SelectItem
+                                value="it"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Italiano
+                              </SelectItem>
+                              <SelectItem
+                                value="pt"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Português
+                              </SelectItem>
+                              <SelectItem
+                                value="ru"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                Русский
+                              </SelectItem>
+                              <SelectItem
+                                value="zh"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                中文
+                              </SelectItem>
+                              <SelectItem
+                                value="ja"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                日本語
+                              </SelectItem>
+                              <SelectItem
+                                value="ko"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                한국어
+                              </SelectItem>
                             </>
                           ) : (
                             <>
-                              <SelectItem value="UTC">UTC</SelectItem>
-                              <SelectItem value="EST">EST</SelectItem>
-                              <SelectItem value="PST">PST</SelectItem>
-                              {/* Add more timezone options as needed */}
+                              <SelectItem
+                                value="UTC"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                UTC
+                              </SelectItem>
+                              <SelectItem
+                                value="GMT"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                GMT (London)
+                              </SelectItem>
+                              <SelectItem
+                                value="EST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                EST (New York)
+                              </SelectItem>
+                              <SelectItem
+                                value="CST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                CST (Chicago)
+                              </SelectItem>
+                              <SelectItem
+                                value="MST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                MST (Denver)
+                              </SelectItem>
+                              <SelectItem
+                                value="PST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                PST (Los Angeles)
+                              </SelectItem>
+                              <SelectItem
+                                value="IST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                IST (Mumbai)
+                              </SelectItem>
+                              <SelectItem
+                                value="JST"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                JST (Tokyo)
+                              </SelectItem>
+                              <SelectItem
+                                value="AEDT"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                AEDT (Sydney)
+                              </SelectItem>
+                              <SelectItem
+                                value="CET"
+                                className="text-foreground hover:bg-highlight hover:bg-opacity-90"
+                              >
+                                CET (Paris)
+                              </SelectItem>
                             </>
                           )}
                         </SelectContent>
                       </Select>
                     ) : (
-                      <p className="text-gray-700">
+                      <p className="text-foreground">
                         {user[field] || t("notSelected")}
                       </p>
                     )}
@@ -230,7 +352,7 @@ const AccountContent = () => {
                   <div key={field} className="space-y-2">
                     <Label
                       htmlFor={field}
-                      className="flex items-center justify-between"
+                      className="flex items-center justify-between text-foreground"
                     >
                       {t(field)}
                       {isEditing ? (
