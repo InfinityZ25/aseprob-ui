@@ -13,7 +13,7 @@ export default function TermsOfServicePage() {
           </h2>
         </CardHeader>
         <p>
-        there should be tos here lol
+        Making things better
         </p>
         <CardContent>
           <div className="space-y-4">
