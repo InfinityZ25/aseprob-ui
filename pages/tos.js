@@ -12,6 +12,9 @@ export default function TermsOfServicePage() {
             {t("termsOfService")}
           </h2>
         </CardHeader>
+        <p>
+        there should be tos here lol
+        </p>
         <CardContent>
           <div className="space-y-4">
             <p>{t("termsOfServiceIntro")}</p>
